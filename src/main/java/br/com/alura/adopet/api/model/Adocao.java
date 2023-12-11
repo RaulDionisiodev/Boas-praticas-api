@@ -13,6 +13,16 @@ import java.util.Objects;
 @Table(name = "adocoes")
 public class Adocao {
 
+    public Adocao(Tutor tutor, Pet pet, String motivo) {
+        this.tutor = tutor;
+        this.pet = pet;
+        this.motivo = motivo;
+        this.status = StatusAdocao.AGUARDANDO_AVALIACAO;
+        this.data = LocalDateTime.now();
+    }
+
+    public Adocao() {} // a JPA exige o construtor vazio na entidade
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -49,55 +59,37 @@ public class Adocao {
         return id;
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public LocalDateTime getData() {
         return data;
-    }
-
-    public void setData(LocalDateTime data) {
-        this.data = data;
     }
 
     public Tutor getTutor() {
         return tutor;
     }
 
-    public void setTutor(Tutor tutor) {
-        this.tutor = tutor;
-    }
-
     public Pet getPet() {
         return pet;
-    }
-
-    public void setPet(Pet pet) {
-        this.pet = pet;
     }
 
     public String getMotivo() {
         return motivo;
     }
 
-    public void setMotivo(String motivo) {
-        this.motivo = motivo;
-    }
-
     public StatusAdocao getStatus() {
         return status;
-    }
-
-    public void setStatus(StatusAdocao status) {
-        this.status = status;
     }
 
     public String getJustificativaStatus() {
         return justificativaStatus;
     }
 
-    public void setJustificativaStatus(String justificativaStatus) {
-        this.justificativaStatus = justificativaStatus;
+    public void marcarComoAprovada() {
+        this.status = StatusAdocao.APROVADO;
+    }
+
+    public void marcarComoReprovada(String justificativa) {
+        this.status = StatusAdocao.REPROVADO;
+        this.justificativaStatus = justificativa;
     }
 }

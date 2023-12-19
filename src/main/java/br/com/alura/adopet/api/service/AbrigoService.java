@@ -9,6 +9,7 @@ import br.com.alura.adopet.api.model.Abrigo;
 import br.com.alura.adopet.api.model.Pet;
 import br.com.alura.adopet.api.repository.AbrigoRepository;
 import br.com.alura.adopet.api.repository.PetRepository;
+import br.com.alura.adopet.api.validacoes.ValidacaoCadastrarAbrigo;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -25,18 +26,16 @@ public class AbrigoService {
     @Autowired
     private PetRepository petRepository;
 
+    @Autowired
+    private List<ValidacaoCadastrarAbrigo> validacaoCadastrarAbrigoList;
+
     public List<Abrigo> listar() {
         return repository.findAll();
     }
 
     public void cadastrar(AbrigoDto dto) {
-        boolean nomeJaCadastrado = repository.existsByNome(dto.nome());
-        boolean telefoneJaCadastrado = repository.existsByTelefone(dto.telefone());
-        boolean emailJaCadastrado = repository.existsByEmail(dto.email());
 
-        if (nomeJaCadastrado || telefoneJaCadastrado || emailJaCadastrado) {
-            throw new ValidacaoException("Dados já cadastrados para outro abrigo!");
-        }
+        validacaoCadastrarAbrigoList.forEach(v -> v.validar(dto));
 
         Abrigo abrigo = new Abrigo(dto.nome(), dto.telefone(), dto.email());
 

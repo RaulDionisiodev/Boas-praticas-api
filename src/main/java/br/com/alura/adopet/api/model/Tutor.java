@@ -39,7 +39,7 @@ public class Tutor {
     @Email
     private String email;
 
-    @OneToMany(mappedBy = "tutor")
+    @OneToMany(mappedBy = "tutor", fetch = FetchType.LAZY)
     @JsonManagedReference("tutor_adocoes")
     private List<Adocao> adocoes;
 

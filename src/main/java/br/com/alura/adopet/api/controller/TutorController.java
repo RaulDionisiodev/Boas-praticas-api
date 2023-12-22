@@ -1,8 +1,6 @@
 package br.com.alura.adopet.api.controller;
 
 import br.com.alura.adopet.api.dto.TutorDto;
-import br.com.alura.adopet.api.model.Tutor;
-import br.com.alura.adopet.api.repository.TutorRepository;
 import br.com.alura.adopet.api.service.TutorService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;

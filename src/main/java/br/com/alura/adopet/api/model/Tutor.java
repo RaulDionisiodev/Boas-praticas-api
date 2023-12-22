@@ -27,20 +27,12 @@ public class Tutor {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    @NotBlank
     private String nome;
-
-    @NotBlank
-    @Pattern(regexp = "\\(?\\d{2}\\)?\\d?\\d{4}-?\\d{4}")
     private String telefone;
 
-    @NotBlank
-    @Email
     private String email;
 
     @OneToMany(mappedBy = "tutor", fetch = FetchType.LAZY)
-    @JsonManagedReference("tutor_adocoes")
     private List<Adocao> adocoes;
 
     @Override

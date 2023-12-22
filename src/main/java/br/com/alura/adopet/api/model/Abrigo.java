@@ -1,10 +1,8 @@
 package br.com.alura.adopet.api.model;
 
+import br.com.alura.adopet.api.dto.AbrigoDto;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Pattern;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,16 +25,9 @@ public class Abrigo {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    @NotBlank
     private String nome;
 
-    @NotBlank
-    @Pattern(regexp = "\\(?\\d{2}\\)?\\d?\\d{4}-?\\d{4}")
     private String telefone;
-
-    @NotBlank
-    @Email
     private String email;
 
     @OneToMany(mappedBy = "abrigo", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
@@ -94,5 +85,9 @@ public class Abrigo {
 
     public void setPets(List<Pet> pets) {
         this.pets = pets;
+    }
+
+    public AbrigoDto toDto() {
+        return new AbrigoDto(getNome(),getTelefone(),getEmail());
     }
 }
